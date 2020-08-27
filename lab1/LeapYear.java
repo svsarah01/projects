@@ -4,15 +4,15 @@ public static boolean isLeapYear(int year) {
    *  @author Sarah Varghese
    */
     if (year%400 == 0) {
-        return True;
+        return true
     } if else (year%4 == 0) {
         if (year%100 != 0) {
-            return True;
+            return true
         } else {
-            return False;
+            return false
         }
     } else {
-        return False;
+        return false
     }
   }
 public class LeapYear {
