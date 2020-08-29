@@ -33,6 +33,7 @@ public class NBody {
         // animating the universe
         StdDraw.enableDoubleBuffering();
         double time = 0;
+        StdAudio.play("audio/2001.mid");
         while (time <= T) {
             double[] xForces = new double[bodies.length];
             double[] yForces = new double[bodies.length];
