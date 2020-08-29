@@ -31,15 +31,11 @@ public class Body {
     }
 
     public double calcForceExertedByX(Body b) {
-        double larger = Math.max(this.xxPos, b.xxPos);
-        double smaller = Math.min(this.xxPos, b.xxPos);
-        return (this.calcForceExertedBy(b)*(larger-smaller))/this.calcDistance(b);
+        return (this.calcForceExertedBy(b)*(b.xxPos-this.xxPos))/this.calcDistance(b);
     }
 
     public double calcForceExertedByY(Body b) {
-        double larger = Math.max(this.yyPos, b.yyPos);
-        double smaller = Math.min(this.yyPos, b.yyPos);
-        return (this.calcForceExertedBy(b)*(larger-smaller))/this.calcDistance(b);
+        return (this.calcForceExertedBy(b)*(b.yyPos-this.yyPos))/this.calcDistance(b);
     }
 
     public double calcNetForceExertedByX(Body[] a) {
@@ -71,5 +67,9 @@ public class Body {
         this.yyVel = this.yyVel + dt*aY;
         this.xxPos = this.xxPos + dt*this.xxVel;
         this.yyPos = this.yyPos + dt*this.yyVel;
+    }
+
+    public void draw() {
+        StdDraw.picture(this.xxPos, this.yyPos, "images/"+this.imgFileName);
     }
 }
