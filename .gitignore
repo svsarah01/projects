@@ -5,6 +5,8 @@
 !**.json
 !.fatweleminus
 !.gitignore
+!library-fa20
+!foods.csv
 *.class
 *.log
 *.ctxt
