@@ -4,7 +4,7 @@ import java.util.Formatter;
  * Scheme-like pairs that can be used to form a list of integers.
  *
  * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
- *         [Do not modify this file.]
+ *         [Do not modify this file.] (:
  */
 public class IntList {
     /**
@@ -80,8 +80,12 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList p = A;
+        while (p.rest != null) {
+            p = p.rest
+        }
+        p.rest = B
+        return A;
     }
 
     /**
@@ -89,8 +93,10 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        if (A = null) {
+            return B;
+        }
+        return new IntList(A.first, catenate(A.rest, B));
     }
 
 
