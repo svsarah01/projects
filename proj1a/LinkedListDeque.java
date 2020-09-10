@@ -27,23 +27,33 @@ public class LinkedListDeque<T> {
     }
 
     public LinkedListDeque() {
-        sentinel = new DNode(sentinel, null, sentinel);
+        sentinel = new DNode(null, null, null);
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
         size = 0;
     }
 
-    public LinkedListDeque(T item) {
-        sentinel = new DNode(sentinel, null, sentinel);
-//        i should check if ^ meets the 61b style guide, pls sarah remember this
-        sentinel.next = new DNode(sentinel, item, sentinel);
-        size = 1;
-    }
+//    public LinkedListDeque(T item) {
+//        sentinel = new DNode(sentinel, null, sentinel);
+////        i should check if ^ meets the 61b style guide, pls sarah remember this
+//        sentinel.next = new DNode(sentinel, item, sentinel.prev);
+//        sentinel.prev = sentinel.next;
+//        size = 1;
+//    }
 
     public int size() {
         return size;
     }
 
     public void addFirst(T item) {
-        sentinel.next = new DNode(sentinel, item, sentinel.next);
+        if (size == 0) {
+            sentinel.next = new DNode(sentinel, item, sentinel.prev);
+            sentinel.prev = sentinel.next;
+//            i want to call linkedlistdeque^ but idk how to
+        }
+        else {
+            sentinel.next = new DNode(sentinel, item, sentinel.next);
+        }
         size += 1;
     }
 
@@ -58,7 +68,8 @@ public class LinkedListDeque<T> {
     }
 
     public void addLast(T item) {
-        sentinel.prev = new DNode(sentinel.prev, item, sentinel);
+        sentinel.prev.next = new DNode(sentinel.prev, item, sentinel);
+        sentinel.prev = sentinel.prev.next;
         size += 1;
     }
 
@@ -97,8 +108,8 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
 
-        for (int i = 0; i <= size; i = i + 1) {
-            System.out.print(get(i));
+        for (int i = 0; i < size; i = i + 1) {
+            System.out.print(get(i) + " ");
         }
         System.out.println();
 
@@ -109,6 +120,7 @@ public class LinkedListDeque<T> {
 //            p = p.next;
 //        }
 //        System.out.println();
+//
 //        same issue as the one above... saying there is no method for printDeque in DNode...
 //        but although it is a DNode it also is a LinkedListDeque & therefore should have this behavior
 //        System.out.print(sentinel.next.item);
