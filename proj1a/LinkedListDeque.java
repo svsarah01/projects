@@ -21,7 +21,7 @@ public class LinkedListDeque<T> {
     private int size;
     private DNode sentinel;
 
-//    am i supposed to implement this using size? or checking sentinel.next? or does having a sentinel mean it isn't empty to begin w/?
+
     public boolean isEmpty() {
         return (size == 0);
     }
@@ -33,14 +33,6 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-//    public LinkedListDeque(T item) {
-//        sentinel = new DNode(sentinel, null, sentinel);
-////        i should check if ^ meets the 61b style guide, pls sarah remember this
-//        sentinel.next = new DNode(sentinel, item, sentinel.prev);
-//        sentinel.prev = sentinel.next;
-//        size = 1;
-//    }
-
     public int size() {
         return size;
     }
@@ -49,10 +41,10 @@ public class LinkedListDeque<T> {
         if (size == 0) {
             sentinel.next = new DNode(sentinel, item, sentinel.prev);
             sentinel.prev = sentinel.next;
-//            i want to call linkedlistdeque^ but idk how to
         }
         else {
-            sentinel.next = new DNode(sentinel, item, sentinel.next);
+            sentinel.next.prev = new DNode(sentinel, item, sentinel.next);
+            sentinel.next = sentinel.next.prev;
         }
         size += 1;
     }
@@ -62,8 +54,9 @@ public class LinkedListDeque<T> {
             return null;
         }
         T first = sentinel.next.item;
+        sentinel.next.item = null;
+        sentinel.next.next.prev = sentinel;
         sentinel.next = sentinel.next.next;
-        sentinel.prev = sentinel.next;
         size -= 1;
         return first;
     }
@@ -79,6 +72,7 @@ public class LinkedListDeque<T> {
             return null;
         }
         T last = sentinel.prev.item;
+        sentinel.prev.item = null;
         sentinel.prev.prev.next = sentinel;
         sentinel.prev = sentinel.prev.prev;
         size -= 1;
@@ -114,14 +108,6 @@ public class LinkedListDeque<T> {
             System.out.print(get(i) + " ");
         }
         System.out.println();
-
-//        DNode p = sentinel.next;
-//
-//        while (p != sentinel) {
-//            System.out.print(p.item);
-//            p = p.next;
-//        }
-//        System.out.println();
 //
 //        same issue as the one above... saying there is no method for printDeque in DNode...
 //        but although it is a DNode it also is a LinkedListDeque & therefore should have this behavior
