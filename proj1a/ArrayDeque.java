@@ -26,7 +26,7 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (size == items.length) {
+        if (size == items.length - 1) {
             resize(size * 2);
         }
         items[nextFirst] = item;
@@ -38,23 +38,23 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        double rFactor = size/(items.length*1.0);
-        if (rFactor < 0.25) {
-            resize(items.length/2);
-        }
+        double rFactor = size / (items.length * 1.0);
         if (nextFirst == items.length - 1) {
             nextFirst = 0;
         } else {
             nextFirst += 1;
         }
-        T first = get(nextFirst);
+        T first = items[nextFirst];
         items[nextFirst] = null;
         size -= 1;
+        if (rFactor < 0.25) {
+            resize(items.length / 2);
+        }
         return first;
     }
 
     public void addLast(T item) {
-        if (size == items.length) {
+        if (size == items.length - 1) {
             resize(size * 2);
         }
         items[nextLast] = item;
@@ -66,23 +66,23 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        double rFactor = size/(items.length*1.0);
-        if (rFactor < 0.25) {
-            resize(items.length/2);
-        }
+        double rFactor = size / (items.length * 1.0);
         if (nextLast == 0)  {
-            nextLast = items.length-1;
+            nextLast = items.length - 1;
         } else {
             nextLast -= 1;
         }
-        T last = get(nextLast);
+        T last = items[nextLast];
         items[nextLast] = null;
         size -= 1;
+        if (rFactor < 0.25) {
+            resize(items.length / 2);
+        }
         return last;
     }
 
     public T get(int index) {
-        int realIndex = nextFirst + 1 + index;
+        int realIndex = nextFirst + index + 1;
         if (realIndex >= items.length) {
             realIndex = realIndex - items.length;
             return items[realIndex];

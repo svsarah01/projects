@@ -4,7 +4,7 @@ public class LinkedListDeque<T> {
         private T item;
         private DNode next;
 
-        public DNode(DNode p, T i, DNode n) {
+        DNode(DNode p, T i, DNode n) {
             prev = p;
             item = i;
             next = n;
