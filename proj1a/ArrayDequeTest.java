@@ -64,6 +64,7 @@ public class ArrayDequeTest {
         ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
         // should be empty
         boolean passed = checkEmpty(true, ad1.isEmpty());
+        int x;
 
         ad1.addFirst(10);
         // should not be empty
@@ -77,26 +78,39 @@ public class ArrayDequeTest {
         ad1.addLast(30);
         ad1.addFirst(10);
         ad1.addLast(40);
+        ad1.addLast(50);
+        ad1.addLast(60);
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
-        ad1.removeFirst();
+        x = ad1.removeFirst();
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
-        ad1.removeLast();
+        x = ad1.removeLast();
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
-        ad1.removeLast();
+        x = ad1.removeLast();
         // should not be empty
         passed = checkEmpty(false, ad1.isEmpty()) && passed;
 
-        ad1.removeLast();
+        x = ad1.removeLast();
+        // should not be empty
+        passed = checkEmpty(false, ad1.isEmpty()) && passed;
+
+        x = ad1.removeLast();
+        // should not be empty
+        passed = checkEmpty(false, ad1.isEmpty()) && passed;
+
+        x = ad1.removeLast();
         // should be empty
         passed = checkEmpty(true, ad1.isEmpty()) && passed;
 
+        ad1.addLast(100);
+
         printTestStatus(passed);
+        System.out.print(x);
     }
 
     /** Adds many items to the front and then removes them from the front, checking for resizing capabilities. */
@@ -116,7 +130,7 @@ public class ArrayDequeTest {
 
         //removing the first 75
         for (int i = 0; i < 75; i = i + 1) {
-            ad1.removeFirst();
+            ad1.removeLast();
         }
         //checking size
         passed = checkSize(25, ad1.size()) && passed;
