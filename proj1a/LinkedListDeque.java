@@ -1,14 +1,13 @@
 public class LinkedListDeque<T> {
     private class DNode {
-        public DNode prev;
-        public T item;
-        public DNode next;
+        private DNode prev;
+        private T item;
+        private DNode next;
 
         public DNode(DNode p, T i, DNode n) {
             prev = p;
             item = i;
             next = n;
-//            not sure if prev is correct but we are doing placeholders until i sort shit out
         }
     }
     private T recursiveHelper(DNode n, int index) {
@@ -41,8 +40,7 @@ public class LinkedListDeque<T> {
         if (size == 0) {
             sentinel.next = new DNode(sentinel, item, sentinel.prev);
             sentinel.prev = sentinel.next;
-        }
-        else {
+        } else {
             sentinel.next.prev = new DNode(sentinel, item, sentinel.next);
             sentinel.next = sentinel.next.prev;
         }
@@ -95,24 +93,13 @@ public class LinkedListDeque<T> {
     public T getRecursive(int index) {
         DNode p = sentinel.next;
         return recursiveHelper(p, index);
-
-//        if (index == 0) {
-//            return sentinel.next.item;
-//        } i need to make a method in DNode to do this implementation ???
-//        return sentinel.next.getRecursive(index - 1);
     }
 
     public void printDeque() {
-
         for (int i = 0; i < size; i = i + 1) {
             System.out.print(get(i) + " ");
         }
         System.out.println();
-//
-//        same issue as the one above... saying there is no method for printDeque in DNode...
-//        but although it is a DNode it also is a LinkedListDeque & therefore should have this behavior
-//        System.out.print(sentinel.next.item);
-//        sentinel.next.printDeque();
     }
 
 }
