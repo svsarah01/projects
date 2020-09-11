@@ -91,6 +91,9 @@ public class LinkedListDeque<T> {
     }
 
     public T getRecursive(int index) {
+        if (index >= size) {
+            return null;
+        }
         DNode p = sentinel.next;
         return recursiveHelper(p, index);
     }

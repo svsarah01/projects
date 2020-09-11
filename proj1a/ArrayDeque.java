@@ -88,6 +88,9 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
+        if (index >= size) {
+            return null;
+        }
         int realIndex = nextFirst + index + 1;
         if (realIndex >= items.length) {
             realIndex = realIndex - items.length;
