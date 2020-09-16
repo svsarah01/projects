@@ -5,7 +5,6 @@ public class TestArrayDequeGold {
 
     @Test
     public void test() {
-        System.out.println("Running randomized test.");
         StudentArrayDeque<Integer> student = new StudentArrayDeque<>();
         ArrayDequeSolution<Integer> solution = new ArrayDequeSolution<>();
         String errorMessage = "";
