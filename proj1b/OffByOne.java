@@ -1,9 +1,7 @@
-import java.lang.*;
-
 public class OffByOne implements CharacterComparator {
 
     @Override
     public boolean equalChars(char x, char y) {
-        return (Math.abs(y - x) == 1);
+        return (Math.abs(Character.toLowerCase(y) - Character.toLowerCase(x)) == 1); /* @source https://stackoverflow.com/questions/13113010/how-to-turn-uppercase-to-lowercase-using-the-charat-method */
     }
 }
