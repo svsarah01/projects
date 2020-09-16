@@ -64,10 +64,6 @@ public class ArrayDeque<T> implements Deque<T> {
         }
     }
 
-    public boolean isEmpty() {
-        return false;
-    }
-
     public T removeLast() {
         if (size == 0) {
             return null;
