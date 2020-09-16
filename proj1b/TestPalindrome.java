@@ -30,6 +30,7 @@ public class TestPalindrome<T> {
     @Test
     public void testPalindrome() {
         assertFalse(palindrome.isPalindrome("moon"));
+        assertTrue(palindrome.isPalindrome("noon"));
         assertFalse(palindrome.isPalindrome(null));
         assertTrue(palindrome.isPalindrome("a"));
         assertFalse(palindrome.isPalindrome("Racecar"));
