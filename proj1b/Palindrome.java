@@ -14,7 +14,7 @@ public class Palindrome {
         if (word == null) {
             return false;
         }
-        if (word.length() == 1) {
+        if (word.length() == 1 | word.length() == 0) {
             return true;
         }
 
@@ -30,7 +30,7 @@ public class Palindrome {
         if (word == null) {
             return false;
         }
-        if (word.length() == 1) {
+        if (word.length() == 1 | word.length() == 0) {
             return true;
         }
         if (cc == null) {
