@@ -2,8 +2,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestPalindrome<T> {
-    // You must use this palindrome, and not instantiate
-    // new Palindromes, or the autograder might be upset.
     static Palindrome palindrome = new Palindrome();
 
     @Test
@@ -17,14 +15,6 @@ public class TestPalindrome<T> {
             assertEquals(actual.get(i), d.get(i));
         }
         assertEquals(actual.size(), d.size());
-    }
-
-    @Test
-    public void emptyTestWordToDeque() {
-        Deque<Character> ch = palindrome.wordToDeque("");
-        Deque actual = new ArrayDeque();
-        assertEquals(actual.size(), ch.size());
-        assertEquals(actual.get(0), ch.get(0));
     }
 
     @Test
