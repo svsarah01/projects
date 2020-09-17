@@ -4,11 +4,11 @@ ArrayDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: wrapindex is amazing & beautiful & wow goddamn
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: Only using one resize method!!
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
@@ -24,7 +24,7 @@ A:
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
-A:
+A: Create a helper function for the repetitive things I have in removeFirst and removeLast
 
 -----
 
@@ -32,7 +32,7 @@ LinkedListDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: passing the sentinel.next directly into my helper instead of creating a temporary pointer
 
 Q: What's something you felt proud of in your code, if anything?
 
@@ -44,7 +44,7 @@ A:
 
 Q: What did you learn by talking to your partner about writing LinkedListDeque?
 
-A:
+A: how cool/insane the double ended linkedlistdeque
 
 Q: What do you wish you would have known before writing LinkedListDeque, if anything?
 
