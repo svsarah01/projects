@@ -4,7 +4,7 @@ public class Palindrome {
         Deque ad = new ArrayDeque();
 
         for (int i = 0; i < word.length(); i++) {
-            ad.addLast(word.charAt(i)); /* @source https://www.techiedelight.com/iterate-over-characters-string-java/ */
+            ad.addLast(word.charAt(i));
         }
 
         return ad;
@@ -20,7 +20,7 @@ public class Palindrome {
 
         Deque ad = wordToDeque(word);
         if (ad.removeFirst() == ad.removeLast()) {
-            return isPalindrome(word.substring(1, word.length() - 1)); /* @source https://beginnersbook.com/2013/12/java-string-substring-method-example/ */
+            return isPalindrome(word.substring(1, word.length() - 1));
         } else {
             return false;
         }
