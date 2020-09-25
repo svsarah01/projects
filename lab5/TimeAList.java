@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,7 +24,17 @@ public class TimeAList {
     }
 
     public static void timeAListConstruction() {
-        // TODO: YOUR CODE HERE
+        List<Integer> Ns = List.of(1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000);
+        List<Double> times = new LinkedList<>();
+        AList<Integer> al = new AList<>();
+        for (int n : Ns) {
+            Stopwatch sw = new Stopwatch();
+            for (int i = 0; i < n; i++) {
+                al.addLast(100);
+            }
+            times.add(sw.elapsedTime());
+        }
+        printTimingTable(Ns, times, Ns);
     }
 
 
