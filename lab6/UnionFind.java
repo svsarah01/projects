@@ -43,6 +43,8 @@ public class UnionFind {
        vertex with itself or vertices that are already connected should not 
        change the sets but may alter the internal structure of the data. */
     public void connect(int v1, int v2) {
+        validate(v1);
+        validate(v2);
         int w1 = find(v1);
         int w2 = find(v2);
         int size1 = sizeOf(v1);
