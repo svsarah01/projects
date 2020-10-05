@@ -23,7 +23,7 @@ public class PercolationStats {
                 if (!(grid.isOpen(row, col))) {
                     grid.open(row, col);
                 }
-            } xArray[i] = grid.numberOfOpenSites() / (size * size) * 1.0;
+            } xArray[i] = grid.numberOfOpenSites() / (size * size * 1.0);
         }
     }
     public double mean() {
