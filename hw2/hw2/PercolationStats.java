@@ -11,7 +11,7 @@ public class PercolationStats {
     public PercolationStats(int N, int T, PercolationFactory pf) {
         experiments = T;
         size = N;
-        if (size <= 0 || experiments < 0) {
+        if (size <= 0 || experiments <= 0) {
             throw new IllegalArgumentException();
         }
         xArray = new double [experiments];
@@ -23,7 +23,7 @@ public class PercolationStats {
                 if (!(grid.isOpen(row, col))) {
                     grid.open(row, col);
                 }
-            } xArray[i] = grid.numberOfOpenSites() / size * 1.0;
+            } xArray[i] = grid.numberOfOpenSites() / (size * size) * 1.0;
         }
     }
     public double mean() {
