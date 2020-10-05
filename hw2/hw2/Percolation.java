@@ -29,7 +29,7 @@ public class Percolation {
         return (size * row) + col;
     }
 
-    private void isValid (int i) {
+    private void isValid(int i) {
         if (i < 0 || i >= size) {
             throw new IndexOutOfBoundsException("Not a valid row or column index!");
         }
@@ -82,7 +82,7 @@ public class Percolation {
     public boolean percolates() { // does the system percolate?
         return bottomSite.connected(topNode, bottomNode);
     }
-    public static void main(String[] args) { // use for unit testing (not required, but keep this here for the autograder)
+    public static void main(String[] args) { // use for unit testing (for the autograder)
 
     }
 }
