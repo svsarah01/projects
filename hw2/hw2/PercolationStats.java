@@ -11,7 +11,7 @@ public class PercolationStats {
     public PercolationStats(int N, int T, PercolationFactory pf) {
         experiments = T;
         size = N;
-        if (size <= 0 || experiments <= 0) {
+        if (N <= 0 || T <= 0) {
             throw new IllegalArgumentException();
         }
         xArray = new double [experiments];
