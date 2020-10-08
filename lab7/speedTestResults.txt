@@ -1,0 +1,12 @@
+InsertInOrderSpeedTest:
+    class ULLMap: 0.00 sec
+    class BSTMap: 0.00 sec
+    Java's Built-in TreeMap: 0.00 sec
+    Java's Built-in HashMap: 0.00 sec
+    (inserted 12 strings)
+
+InsertRandomSpeedTest:
+    class ULLMap: 0.00 sec
+    class BSTMap: 0.00 sec
+    Java's Built-in TreeMap: 0.00 sec
+    (inserted 12 strings of length 12)
