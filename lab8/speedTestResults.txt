@@ -1,0 +1,13 @@
+InsertInOrderSpeedTest:
+    class ULLMap: 0.00 sec
+    class MyHashMap: 0.00 sec
+    Java's Built-in HashMap: 0.00 sec
+    (inserted 12 strings)
+
+InsertRandomSpeedTest:
+    class ULLMap: 0.00 sec
+    class MyHashMap: 0.00 sec
+    Java's Built-in HashMap: 0.00 sec
+    (inserted 12 strings of length 12)
+
+I think that HashMap's are faster than BST and trees in general; contains has constant runtime and for that reason it is better. 
