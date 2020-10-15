@@ -1,7 +1,7 @@
 package bearmaps;
 import java.util.List;
 
-public class NaivePointSet implements PointSet{
+public class NaivePointSet implements PointSet {
     List points;
 
     public NaivePointSet(List<Point> points) {

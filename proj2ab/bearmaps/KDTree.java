@@ -20,8 +20,7 @@ public class KDTree implements PointSet {
     private Node put(Point p, Node n, boolean xOrY) {
         if (n == null) {
             n = new Node(p, xOrY);
-        }
-        else if (p == n.p) {
+        } else if (p == n.p) {
             return n;
         } else {
             boolean cmp;
@@ -60,16 +59,13 @@ public class KDTree implements PointSet {
             best = n;
         }
         boolean cmp;
-        double dist;
         Point bestPossible;
         if (n.xOrY) {
             cmp = goal.getX() < n.p.getX();
-            dist = Math.abs(goal.getX() - n.p.getX());
-            bestPossible = new Point(dist, goal.getY());
+            bestPossible = new Point(n.p.getX(), goal.getY());
         } else {
             cmp =  goal.getY() < n.p.getY();
-            dist = Math.abs(goal.getY() - n.p.getY());
-            bestPossible = new Point(goal.getX(), dist);
+            bestPossible = new Point(goal.getX(), n.p.getY());
         }
         Node goodSide;
         Node badSide;
