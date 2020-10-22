@@ -4,13 +4,24 @@ import edu.princeton.cs.algs4.Stopwatch;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import static edu.princeton.cs.algs4.StdRandom.uniform;
 import static org.junit.Assert.*;
 
-public class ArrayHeapMinPQTest{
+public class ArrayHeapMinPQTest {
+
+    @Test
+    public void smallTest() {
+        ArrayHeapMinPQ arrayPQ = new ArrayHeapMinPQ();
+        arrayPQ.add("item 1", uniform(-500.0, 500.0));
+        arrayPQ.add("item 2", uniform(-500.0, 500.0));
+        arrayPQ.add("item 3", uniform(-500.0, 500.0));
+        arrayPQ.add("item 4", uniform(-500.0, 500.0));
+        arrayPQ.removeSmallest();
+        arrayPQ.removeSmallest();
+        arrayPQ.removeSmallest();
+        arrayPQ.removeSmallest();
+    }
 
     @Test
     public void sanityCheck() {
@@ -123,7 +134,8 @@ public class ArrayHeapMinPQTest{
         List<Integer> listofNs = List.of(31250, 62500, 125000, 250000, 500000, 1000000);
         List<Double> constructionTimes = new ArrayList<>();
         List<Double> removeSmallestTimes = new ArrayList<>();
-        List<Integer> removeSmallestOps = List.of(1000, 1000, 1000, 1000, 1000, 1000);
+        List<Double> changePriorityTimes = new ArrayList<>();
+        List<Integer> removeSmallestOps = List.of(31250, 31250, 31250, 31250, 31250, 31250);
 
         for (int N : listofNs) {
             /* testing ArrayHeapMinPQ construction runtime */
@@ -135,18 +147,34 @@ public class ArrayHeapMinPQTest{
             }
             constructionTimes.add(constructSW.elapsedTime());
 
+            /* testing ArrayHeapMinPQ changePriority runtime */
+            Stopwatch changePrioritySW = new Stopwatch();
+            for (int i = 0; i < 31250; i++) {
+                arrayPQ.changePriority(arrayPQ.getSmallest(), uniform(-500.0, 500.0));
+            }
+            changePriorityTimes.add(changePrioritySW.elapsedTime());
+
             /* testing ArrayHeapMinPQ removeSmallest runtime */
             Stopwatch removeSW = new Stopwatch();
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 31250; i++) {
                 arrayPQ.removeSmallest();
             }
             removeSmallestTimes.add(removeSW.elapsedTime());
         }
 
+        /* printing ArrayHeapMinPQ timing tables */
+        printTimingTable(listofNs, constructionTimes, listofNs,
+                "Timing table for ArrayHeapMinPQ Construction");
+        printTimingTable(listofNs, changePriorityTimes, removeSmallestOps,
+                "Timing table for ArrayHeapMinPQ changePriority");
+        printTimingTable(listofNs, removeSmallestTimes, removeSmallestOps,
+                "Timing table for ArrayHeapMinPQ removeSmallest");
+
+        /* same construction and removeSmallest on NaiveMinPQ */
         List<Double> naiveConstructionTimes = new ArrayList<>();
         List<Double> naiveRemoveSmallestTimes = new ArrayList<>();
         for (int N : listofNs) {
-            /* testing ArrayHeapMinPQ construction runtime */
+            /* testing NaiveMinPQ construction runtime */
             Stopwatch naiveConstructSW = new Stopwatch();
             NaiveMinPQ naivePQ = new NaiveMinPQ();
             for (int i = 0; i < N; i++) {
@@ -155,21 +183,15 @@ public class ArrayHeapMinPQTest{
             }
             naiveConstructionTimes.add(naiveConstructSW.elapsedTime());
 
-            /* testing ArrayHeapMinPQ removeSmallest runtime */
+            /* testing NaiveMinPQ removeSmallest runtime */
             Stopwatch naiveRemoveSW = new Stopwatch();
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 31250; i++) {
                 naivePQ.removeSmallest();
             }
             naiveRemoveSmallestTimes.add(naiveRemoveSW.elapsedTime());
         }
 
-        /* printing timing tables */
-        printTimingTable(listofNs, constructionTimes, listofNs,
-                "Timing table for ArrayHeapMinPQ Construction");
-        System.out.println();
-        printTimingTable(listofNs, removeSmallestTimes, removeSmallestOps,
-                "Timing table for ArrayHeapMinPQ removeSmallest");
-        System.out.println();
+        /* printing NaiveMinPQ timing tables */
         printTimingTable(listofNs, naiveConstructionTimes, listofNs,
                 "Timing table for NaiveMinPQ Construction");
         System.out.println();
@@ -177,3 +199,4 @@ public class ArrayHeapMinPQTest{
                 "Timing table for NaiveMinPQ removeSmallest");
     }
 }
+

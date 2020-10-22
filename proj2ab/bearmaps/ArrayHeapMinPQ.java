@@ -1,7 +1,6 @@
 package bearmaps;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
@@ -50,21 +49,21 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     private int end;
 
     public ArrayHeapMinPQ() {
-        items = new ArrayHeapMinPQ.PriorityNode[4];
+        items = new ArrayHeapMinPQ.PriorityNode[10];
         size = 0;
         end = 1;
         itemMap = new HashMap<>();
     }
 
     private PriorityNode leftChild(PriorityNode node) {
-        if (node.getIndex() * 2 > items.length - 1) {
+        if (node == null || node.getIndex() * 2 > items.length - 1) {
             return null;
         }
         return items[node.getIndex() * 2];
     }
 
     private PriorityNode rightChild(PriorityNode node) {
-        if (node.getIndex() * 2 > items.length - 1) {
+        if (node == null || node.getIndex() * 2 > items.length - 1) {
             return null;
         }
         return items[(node.getIndex() * 2) + 1];
@@ -75,6 +74,9 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     private void resize(int capacity) {
+        if (capacity < 2) {
+            capacity = 2;
+        }
         PriorityNode[] temp = new ArrayHeapMinPQ.PriorityNode[capacity];
         for (int i = 0; i <= size; i++) {
             temp[i] = items[i];
@@ -83,6 +85,9 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     private void swap(PriorityNode n1, PriorityNode n2) {
+        if (n1.equals(n2)) {
+            return;
+        }
         int n1Index = n1.getIndex();
         int n2Index = n2.getIndex();
         PriorityNode temp = n1;
@@ -99,7 +104,8 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (node.smaller(parent(node))) {
             swap(node, parent(node));
             swim(node);
-        } return;
+        }
+        return;
     }
 
     private void sink(PriorityNode node) {
@@ -115,7 +121,8 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         } else if (rightChild(node).smaller(leftChild(node)) && rightChild(node).smaller(node)) {
             swap(node, rightChild(node));
             sink(node);
-        } return;
+        }
+        return;
     }
 
     @Override
@@ -141,16 +148,17 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     @Override
     public T getSmallest() {
-        if (items[1] == null) {
+        if (items[1] == null || size < 1) {
             throw new NoSuchElementException();
-        } return items[1].getItem();
+        }
+        return items[1].getItem();
     }
 
     @Override
     public T removeSmallest() {
         T smallest = getSmallest();
         if (size / (items.length * 1.0) <= 0.25) {
-            resize(items.length/2);
+            resize(items.length / 2);
         }
         swap(items[1], items[size]);
         items[size] = null;
