@@ -1,0 +1,105 @@
+package bearmaps.proj2c;
+
+import bearmaps.proj2ab.ArrayHeapMinPQ;
+import edu.princeton.cs.algs4.Stopwatch;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
+    private SolverOutcome outcome;
+    private List<Vertex> solution;
+    private double solutionWeight;
+    private int numStatesExplored;
+    private double time;
+
+    private HashMap<Vertex, Double> distTo;
+    private HashMap<Vertex, WeightedEdge<Vertex>> edgeTo;
+    private ArrayHeapMinPQ<Vertex> pq;
+    private Vertex start;
+    private Vertex end;
+    private AStarGraph h;
+
+    private void relax(WeightedEdge<Vertex> e) {
+        Vertex from = e.from();
+        Vertex to = e.to();
+        double weight = e.weight();
+        edgeTo.put(to, e);
+        if (!distTo.containsKey(to) || distTo.get(from) + weight < distTo.get(to)) {
+            distTo.put(to, distTo.get(from) + weight);
+            if (pq.contains(to)) {
+                pq.changePriority(to, distTo.get(to) + h.estimatedDistanceToGoal(to, end));
+            } else {
+                pq.add(to, distTo.get(to) + h.estimatedDistanceToGoal(to, end));
+            }
+        }
+    }
+
+    public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
+        h = input;
+        this.start = start;
+        this.end = end;
+        numStatesExplored = 0;
+        Stopwatch sw = new Stopwatch();
+        pq = new ArrayHeapMinPQ<>();
+        pq.add(start, input.estimatedDistanceToGoal(start, end));
+        distTo = new HashMap<>();
+        distTo.put(start, 0.0);
+        while (pq.size() != 0 || !pq.getSmallest().equals(end)) {
+            time = sw.elapsedTime();
+            if (time > timeout) {
+                outcome = SolverOutcome.TIMEOUT;
+                solution = Collections.emptyList();
+                solutionWeight = 0;
+                break;
+            }
+            Vertex best = pq.removeSmallest();
+            numStatesExplored += 1;
+            for (WeightedEdge<Vertex> e : input.neighbors(best)) {
+                relax(e);
+            }
+        }
+        time = sw.elapsedTime();
+        if (pq.getSmallest().equals(end)) {
+            outcome = SolverOutcome.SOLVED;
+            /* creating solution list and calculating solutionWeight */
+            solution = new LinkedList<>();
+            solutionWeight = 0;
+            solution.add(end);
+            Vertex v = end;
+            while (v != start) {
+                WeightedEdge<Vertex> e = edgeTo.get(v);
+                solutionWeight += e.weight();
+                solution.add(0, e.from());
+                v = e.from();
+            }
+            solution.add(0, v);
+        }
+        else if (pq.size() == 0) {
+            outcome = SolverOutcome.UNSOLVABLE;
+            solution = Collections.emptyList();
+            solutionWeight = 0;
+        }
+    }
+
+    public SolverOutcome outcome() {
+        return outcome;
+    }
+
+    public List<Vertex> solution() {
+        return solution;
+    }
+
+    public double solutionWeight() {
+        return solutionWeight;
+    }
+
+    public int numStatesExplored() {
+        return numStatesExplored;
+    }
+
+    public double explorationTime() {
+        return time;
+    }
+}
