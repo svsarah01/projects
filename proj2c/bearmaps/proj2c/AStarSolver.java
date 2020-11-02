@@ -15,23 +15,27 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private double time;
 
     private HashMap<Vertex, Double> distTo;
-    private HashMap<Vertex, WeightedEdge<Vertex>> edgeTo;
+    private HashMap<Vertex, Vertex> edgeTo;
     private ArrayHeapMinPQ<Vertex> pq;
     private Vertex start;
     private Vertex end;
     private AStarGraph h;
 
     private void relax(WeightedEdge<Vertex> e) {
+        if (e == null) {
+            return;
+        }
         Vertex from = e.from();
         Vertex to = e.to();
         double weight = e.weight();
-        edgeTo.put(to, e);
+        double heuristic = h.estimatedDistanceToGoal(to, end);
         if (!distTo.containsKey(to) || distTo.get(from) + weight < distTo.get(to)) {
             distTo.put(to, distTo.get(from) + weight);
+            edgeTo.put(to, from);
             if (pq.contains(to)) {
-                pq.changePriority(to, distTo.get(to) + h.estimatedDistanceToGoal(to, end));
+                pq.changePriority(to, distTo.get(to) + heuristic);
             } else {
-                pq.add(to, distTo.get(to) + h.estimatedDistanceToGoal(to, end));
+                pq.add(to, distTo.get(to) + heuristic);
             }
         }
     }
@@ -45,8 +49,9 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         pq = new ArrayHeapMinPQ<>();
         pq.add(start, input.estimatedDistanceToGoal(start, end));
         distTo = new HashMap<>();
+        edgeTo = new HashMap<>();
         distTo.put(start, 0.0);
-        while (pq.size() != 0 || !pq.getSmallest().equals(end)) {
+        while (pq.size() != 0 && !pq.getSmallest().equals(end)) {
             time = sw.elapsedTime();
             if (time > timeout) {
                 outcome = SolverOutcome.TIMEOUT;
@@ -63,18 +68,16 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         time = sw.elapsedTime();
         if (pq.getSmallest().equals(end)) {
             outcome = SolverOutcome.SOLVED;
-            /* creating solution list and calculating solutionWeight */
+            solutionWeight = distTo.get(end);
+            /* creating solution list */
             solution = new LinkedList<>();
-            solutionWeight = 0;
             solution.add(end);
             Vertex v = end;
             while (v != start) {
-                WeightedEdge<Vertex> e = edgeTo.get(v);
-                solutionWeight += e.weight();
-                solution.add(0, e.from());
-                v = e.from();
+                Vertex e = edgeTo.get(v);
+                solution.add(0, e);
+                v = e;
             }
-            solution.add(0, v);
         }
         else if (pq.size() == 0) {
             outcome = SolverOutcome.UNSOLVABLE;
