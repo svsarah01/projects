@@ -46,6 +46,12 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         this.end = end;
         numStatesExplored = 0;
         Stopwatch sw = new Stopwatch();
+        if (start == end) {
+            outcome = SolverOutcome.SOLVED;
+            solution = List.of(start);
+            solutionWeight = 0;
+            time = sw.elapsedTime();
+        }
         pq = new DoubleMapPQ<>();
         pq.add(start, input.estimatedDistanceToGoal(start, end));
         distTo = new HashMap<>();
