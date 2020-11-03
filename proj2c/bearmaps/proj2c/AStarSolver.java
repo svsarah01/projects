@@ -1,6 +1,6 @@
 package bearmaps.proj2c;
 
-import bearmaps.proj2ab.ArrayHeapMinPQ;
+import bearmaps.proj2ab.DoubleMapPQ;
 import edu.princeton.cs.algs4.Stopwatch;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     private HashMap<Vertex, Double> distTo;
     private HashMap<Vertex, Vertex> edgeTo;
-    private ArrayHeapMinPQ<Vertex> pq;
+    private DoubleMapPQ<Vertex> pq;
     private Vertex start;
     private Vertex end;
     private AStarGraph h;
@@ -46,19 +46,19 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         this.end = end;
         numStatesExplored = 0;
         Stopwatch sw = new Stopwatch();
-        pq = new ArrayHeapMinPQ<>();
+        pq = new DoubleMapPQ<>();
         pq.add(start, input.estimatedDistanceToGoal(start, end));
         distTo = new HashMap<>();
         edgeTo = new HashMap<>();
         distTo.put(start, 0.0);
         while (pq.size() != 0 && !pq.getSmallest().equals(end)) {
             time = sw.elapsedTime();
-//            if (time > timeout) {
-//                outcome = SolverOutcome.TIMEOUT;
-//                solution = Collections.emptyList();
-//                solutionWeight = 0;
-//                break;
-//            }
+            if (time > timeout) {
+                outcome = SolverOutcome.TIMEOUT;
+                solution = Collections.emptyList();
+                solutionWeight = 0;
+                break;
+            }
             Vertex best = pq.removeSmallest();
             numStatesExplored += 1;
             for (WeightedEdge<Vertex> e : input.neighbors(best)) {
@@ -70,8 +70,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             outcome = SolverOutcome.UNSOLVABLE;
             solution = Collections.emptyList();
             solutionWeight = 0;
-        }
-        else if (pq.getSmallest().equals(end)) {
+        } else if (pq.getSmallest().equals(end)) {
             outcome = SolverOutcome.SOLVED;
             solutionWeight = distTo.get(end);
             /* creating solution list */
