@@ -3,7 +3,10 @@ package bearmaps.proj2c;
 import bearmaps.proj2ab.DoubleMapPQ;
 import edu.princeton.cs.algs4.Stopwatch;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private SolverOutcome outcome;
@@ -15,11 +18,9 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private HashMap<Vertex, Double> distTo;
     private HashMap<Vertex, Vertex> edgeTo;
     private DoubleMapPQ<Vertex> pq;
-    private Vertex start;
-    private Vertex end;
-    private AStarGraph h;
 
-    private void relax(WeightedEdge<Vertex> e) {
+
+    private void relax(WeightedEdge<Vertex> e, Vertex end, AStarGraph h) {
         if (e == null) {
             return;
         }
@@ -39,9 +40,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     }
 
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
-        h = input;
-        this.start = start;
-        this.end = end;
         numStatesExplored = 0;
         Stopwatch sw = new Stopwatch();
         pq = new DoubleMapPQ<>();
@@ -60,7 +58,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             Vertex best = pq.removeSmallest();
             numStatesExplored += 1;
             for (WeightedEdge<Vertex> e : input.neighbors(best)) {
-                relax(e);
+                relax(e, end, input);
             }
         }
         time = sw.elapsedTime();
@@ -75,7 +73,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             solution = new ArrayList<>();
             solution.add(end);
             Vertex v = end;
-            while (v != start) {
+            while (!v.equals(start)) {
                 Vertex e = edgeTo.get(v);
                 solution.add(e);
                 v = e;
