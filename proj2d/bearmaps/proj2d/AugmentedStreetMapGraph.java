@@ -21,6 +21,8 @@ import java.util.LinkedList;
 public class AugmentedStreetMapGraph extends StreetMapGraph {
     HashMap<Point, Node> pointToNodeMap;
     KDTree kdt;
+    List<String> names;
+    HashMap<String, Node> cleanedNameMap;
 
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
@@ -28,7 +30,11 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         List<Node> nodes = this.getNodes();
         pointToNodeMap = new HashMap<>();
         List<Point> points = new LinkedList<>();
+        cleanedNameMap = new HashMap<>();
+        names = new LinkedList<>();
         for (Node n : nodes) {
+            names.add(cleanString(n.name()));
+            cleanedNameMap.put(cleanString(n.name()), n);
             long id = n.id();
             if (!this.neighbors(id).isEmpty()) {
                 Point p = new Point(n.lon(), n.lat());
@@ -57,13 +63,83 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     /**
      * For Project Part III (gold points)
      * In linear time, collect all the names of OSM locations that prefix-match the query string.
-     * @param prefix Prefix string to be searched for. Could be any case, with our without
+     * @paramprefix Prefix string to be searched for. Could be any case, with our without
      *               punctuation.
      * @return A <code>List</code> of the full names of locations whose cleaned name matches the
      * cleaned <code>prefix</code>.
      */
+
+    class TrieNode {
+        private boolean isKey;
+        private HashMap<Character, TrieNode> next;
+
+        private TrieNode(boolean b){
+            isKey = b;
+            next = new HashMap<>();
+        }
+
+        private void add(String s) {
+            if (s.length() == 0) {
+                return;
+            }
+            char c = s.charAt(0);
+            boolean last = s.length() == 1;
+            if (!next.containsKey(c)) {
+                next.put(c, new TrieNode(last));
+            }
+            next.get(c).add(s.substring(1));
+        }
+    }
+
+    class TrieMap {
+        private TrieNode root;
+
+        private TrieMap(List<String> names) {
+            root = new TrieNode(false);
+            for (String s : names) {
+                root.add(s);
+            }
+        }
+
+        private void collect(TrieNode n, String prefix, String result, List<String> keys) {
+            if (n == null) {
+                return;
+            }
+            if (n.isKey) {
+                keys.add(result);
+            }
+            if (prefix.length() == 0) {
+                String prevResult = result;
+                for (char c : n.next.keySet()) {
+                    result = prevResult + c;
+                    TrieNode cNode = n.next.get(c);
+                    collect(cNode, prefix, result, keys);
+                }
+            } else {
+                char firstLetter = prefix.charAt(0);
+                if (n.next.containsKey(firstLetter)) {
+                    result += firstLetter;
+                    TrieNode cNode = n.next.get(firstLetter);
+                    collect(cNode, prefix.substring(1), result, keys);
+                }
+            }
+        }
+
+        private List<String> keysWithPrefix(String prefix) {
+            List<String> keys = new LinkedList<>();
+            collect(root, prefix, "", keys);
+            return keys;
+        }
+    }
+
+    private List<String> getLocationsByPrefixHelper(String prefix) {
+        TrieMap t = new TrieMap(names);
+        return t.keysWithPrefix(prefix);
+    }
+
+
     public List<String> getLocationsByPrefix(String prefix) {
-        return new LinkedList<>();
+        return getLocationsByPrefixHelper(prefix);
     }
 
     /**
@@ -80,7 +156,20 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * "id" -> Number, The id of the node. <br>
      */
     public List<Map<String, Object>> getLocations(String locationName) {
-        return new LinkedList<>();
+        LinkedList<Map<String, Object>> result = new LinkedList<>();
+        String cleanedLocationName = cleanString(locationName);
+        for (String name : names) {
+            if (name.equals(cleanedLocationName)) {
+                Node n = cleanedNameMap.get(name);
+                HashMap<String, Object> location = new HashMap<>();
+                location.put("lat", n.lat());
+                location.put("lon", n.lon());
+                location.put("name", n.name());
+                location.put("id", n.id());
+                result.add(location);
+            }
+        }
+        return result;
     }
 
 
