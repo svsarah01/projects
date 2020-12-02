@@ -24,6 +24,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     //new
     Trie cleanedNameTrie;
     HashMap<String, List<Node>> cleanNametoNodeMap;
+    HashMap<String, String> cleanNametoNamesMap;
 
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
@@ -34,11 +35,13 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         //new
         cleanedNameTrie = new Trie();
         cleanNametoNodeMap = new HashMap<>();
+        cleanNametoNamesMap = new HashMap<>();
         for (Node n : nodes) {
             //new
             if (n.name() != null) {
                 String cleanName = cleanString(n.name());
                 cleanedNameTrie.add(cleanName);
+                cleanNametoNamesMap.put(cleanName, n.name());
                 if (!cleanNametoNodeMap.containsKey(cleanName)) {
                     cleanNametoNodeMap.put(cleanName, new LinkedList<>());
                 }
@@ -83,11 +86,12 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         List<String> result = new LinkedList<>();
         System.out.println(cleanedResult);
         for (String s : cleanedResult) {
-            if (cleanNametoNodeMap.containsKey(s)) {
-                for (Node n : cleanNametoNodeMap.get(s)) {
-                    result.add(n.name());
-                }
-            }
+            result.add(cleanNametoNamesMap.get(s));
+//            if (cleanNametoNodeMap.containsKey(s)) {
+//                for (Node n : cleanNametoNodeMap.get(s)) {
+//                    result.add(n.name());
+//                }
+//            }
         }
         return result;
     }
