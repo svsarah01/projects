@@ -49,7 +49,9 @@ public class Trie {
         List<String> result = new LinkedList<>();
         for (int i = 0; i < s.length(); i++) {
             int j = s.charAt(i) - 97;
-            n = n.next[j];
+            if (j < 27 && j >= 0) {
+                n = n.next[j];
+            }
         }
         collect(n, new StringBuilder(), result);
         return result;
