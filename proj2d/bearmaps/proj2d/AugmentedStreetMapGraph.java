@@ -132,4 +132,33 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     private static String cleanString(String s) {
         return s.replaceAll("[^a-zA-Z ]", "").toLowerCase();
     }
+
+    public static void main(String[] args) {
+        Trie t = new Trie();
+        t.add(cleanString("Pappy's"));
+        t.add(cleanString("Papa John's"));
+        t.add(cleanString("Pardee"));
+        t.add(cleanString("Party Sushi"));
+        t.add(cleanString("Pariah House"));
+        t.add(cleanString("Paris Baguette"));
+        t.add(cleanString("Park Avenue Bar & Grill"));
+        t.add(cleanString("Park Day School"));
+        t.add(cleanString("Park Hills Fountain"));
+        t.add(cleanString("Pacific Boychoir Academy"));
+        t.add(cleanString("Pacific Salces - Kitchen, Bath, Electronics"));
+        t.add(cleanString("Pacific Standard Taproom"));
+        t.add(cleanString("Pacific E-Bike"));
+        t.add(cleanString("Pacific Film Archive Theater"));
+        t.add(cleanString("Paco Collars"));
+        t.add(cleanString("Pasta Pomodoro"));
+        t.add(cleanString("Padre"));
+        t.add(cleanString("Pat Brown's Grille"));
+        t.add(cleanString("Paul's Shoe Repair"));
+        t.add(cleanString("Pave"));
+        t.add(cleanString("Paisan"));
+        t.add(cleanString("Payn's Stationery - Office Supplies"));
+        t.add(cleanString("Panoramic Hill"));
+
+        List<String> l = t.keysWithPrefix("pa");
+    }
 }

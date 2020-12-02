@@ -53,7 +53,7 @@ public class Trie {
                 n = n.next[j];
             }
         }
-        collect(n, new StringBuilder(), result);
+        collect(n, new StringBuilder(s), result);
         return result;
     }
 
@@ -62,14 +62,17 @@ public class Trie {
             return;
         }
         if (n.isKey) {
-            results.add(prefix.toString() + n.ch);
+            results.add(prefix.toString());
         }
         for (int c = 0; c < 26; c++) {
             if (n.next[c] != null) {
                 String p = prefix.toString();
-                prefix.append(n.ch);
-                collect(n.next[c], prefix, results);
+                TrieNode w = n.next[c];
+                prefix.append(w.ch);
+                System.out.println(prefix.toString());
+                collect(w, prefix, results);
                 prefix = new StringBuilder(p);
+                System.out.println(prefix.toString());
             }
         }
     }
@@ -82,6 +85,6 @@ public class Trie {
         t.add("sam");
         t.add("sap");
         t.add("same");
-        List<String> s = t.keysWithPrefix("a");
+        List<String> s = t.keysWithPrefix("sam");
     }
 }
