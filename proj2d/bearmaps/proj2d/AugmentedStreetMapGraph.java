@@ -36,8 +36,11 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         cleanNametoNodeMap = new HashMap<>();
         for (Node n : nodes) {
             //new
-            String cleanName = cleanString(n.name());
-            cleanedNameTrie.add(cleanName);
+            String cleanName = n.name();
+            if (n.name() != null) {
+                cleanName = cleanString(n.name());
+                cleanedNameTrie.add(cleanName);
+            }
             if (!cleanNametoNodeMap.containsKey(cleanName)) {
                 cleanNametoNodeMap.put(cleanName, new LinkedList<>());
             }
