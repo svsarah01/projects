@@ -39,7 +39,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
             if (n.name() != null) {
                 String cleanName = cleanString(n.name());
                 cleanedNameTrie.add(cleanName);
-                System.out.println(cleanName);
                 if (!cleanNametoNodeMap.containsKey(cleanName)) {
                     cleanNametoNodeMap.put(cleanName, new LinkedList<>());
                 }
@@ -172,11 +171,28 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         List<String> l2 = t.keysWithPrefix("j");
         List<String> l3 = t.keysWithPrefix("a");
 
-        t.add(cleanString("Key Route Train Station"));
-        t.add(cleanString("Kitchen On Fire"));
-        t.add(cleanString("Kitchen On Fire West"));
+
+        List<String> Kinputs = List.of("KPFA-FM (Berkeley)", "KPFB-FM (Berkeley)", "Kabana", "Kathmandu Restaurant",
+                "Kaze Ramen Noodle", "KALX-FM (Berkeley)", "Kamado Sushi", "Kansai", "Kang Tong", "Kang Nam Pho", "KBLX-AM (Berkeley)",
+                "Krav Maga Xtreme", "Kresge Engineering Library", "Kristin Gross, Ph.d.", "Kronnerburger", "Key Route Train Station",
+                "Ken Betts Suds Machine", "Kentucky Fried Chicken", "KFRC", "KFRC-AM (San Francisco)", "Khana Peena", "Kiraku", "Kirala",
+                "Kirala 2", "Kirin", "Kitchen On Fire", "Kitchen On Fire West", "Kittredge & Fulton (Oxford Plaza)",
+                "Kittredge & Milvia (Library Gardens Apts)", "Kid Dynamo", "Kiku Sushi", "King Pin Donuts", "King St Library",
+                "King Yen", "Kings Market", "Kingdom Hall of Jehovahs Witnesses", "Kingfish", "Kyu 2 Sushi", "Kyoto", "Knights Inn Berkeley",
+                "Korean War Memorial", "Koryo", "Koja Kitchen", "Kona Club");
+
+        for (String s : Kinputs) {
+            t.add(cleanString(s));
+        }
 
         List<String> l4 = t.keysWithPrefix("k");
+        System.out.println(l4.size() == Kinputs.size());
+        System.out.println(l4.contains(cleanString("Key Route Train Station")));
+        System.out.println(l4.contains(cleanString("Kitchen on Fire")));
+        System.out.println(l4.contains(cleanString("Kitchen on Fire West")));
 
+        t.add("ally west");
+        t.add("ally");
+        System.out.println(t.keysWithPrefix("a"));
     }
 }

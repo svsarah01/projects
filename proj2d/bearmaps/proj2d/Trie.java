@@ -34,6 +34,9 @@ public class Trie {
                         }
                     }
                     n = n.next[v];
+                    if (i == s.length() - 1) {
+                        n.isKey = true;
+                    }
                 }
             }
         }
