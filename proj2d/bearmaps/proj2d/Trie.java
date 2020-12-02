@@ -22,14 +22,16 @@ public class Trie {
             for (int i = 0; i < s.length(); i++) {
                 char c = s.charAt(i);
                 int v = c - 97;
-                if (n.next[v] == null) {
-                    if (i == s.length() - 1) {
-                        n.next[v] = new TrieNode(c, true);
-                    } else {
-                        n.next[v] = new TrieNode(c, false);
+                if (v < 27 && v >= 0) {
+                    if (n.next[v] == null) {
+                        if (i == s.length() - 1) {
+                            n.next[v] = new TrieNode(c, true);
+                        } else {
+                            n.next[v] = new TrieNode(c, false);
+                        }
                     }
+                    n = n.next[v];
                 }
-                n = n.next[v];
             }
         }
     }
@@ -72,7 +74,7 @@ public class Trie {
 
     public static void main(String[] args) {
         Trie t = new Trie();
-        t.add("awls");
+        t.add(" awls");
         t.add("apple");
         t.add("sad");
         t.add("sam");
