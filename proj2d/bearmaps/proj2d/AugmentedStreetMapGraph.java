@@ -81,7 +81,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         String cleanedPrefix = cleanString(prefix);
         List<String> cleanedResult = cleanedNameTrie.keysWithPrefix(cleanedPrefix);
         List<String> result = new LinkedList<>();
-        System.out.println(result);
+        System.out.println(cleanedResult);
         for (String s : cleanedResult) {
             if (cleanNametoNodeMap.containsKey(s)) {
                 System.out.println("Had Node list for String: " + s);
@@ -166,6 +166,10 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         t.add(cleanString("Johnny B's Cafe"));
         t.add(cleanString("Johnny's"));
 
+        t.add(cleanString("First Baptist Church (in Covenant with First Congregational Church)"));
+
         List<String> l2 = t.keysWithPrefix("jo");
+        List<String> l3 = t.keysWithPrefix("fi");
+
     }
 }
