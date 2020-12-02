@@ -63,7 +63,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     private PriorityNode rightChild(PriorityNode node) {
-        if (node == null || node.getIndex() * 2 > items.length - 1) {
+        if (node == null || (node.getIndex() * 2) + 1 > items.length - 1) {
             return null;
         }
         return items[(node.getIndex() * 2) + 1];
@@ -115,10 +115,11 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (node.smaller(leftChild(node)) && node.smaller(rightChild(node))) {
             return;
         }
-        if (leftChild(node).smaller(rightChild(node)) && leftChild(node).smaller(node)) {
+        if (leftChild(node) != null && leftChild(node).smaller(rightChild(node)) && leftChild(node).smaller(node)) {
             swap(node, leftChild(node));
             sink(node);
-        } else if (rightChild(node).smaller(leftChild(node)) && rightChild(node).smaller(node)) {
+        }
+        if (rightChild(node) != null && rightChild(node).smaller(leftChild(node)) && rightChild(node).smaller(node)) {
             swap(node, rightChild(node));
             sink(node);
         }
