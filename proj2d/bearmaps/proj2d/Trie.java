@@ -22,6 +22,9 @@ public class Trie {
             for (int i = 0; i < s.length(); i++) {
                 char c = s.charAt(i);
                 int v = c - 97;
+                if (c == 32) {
+                    v = 26;
+                }
                 if (v < 27 && v >= 0) {
                     if (n.next[v] == null) {
                         if (i == s.length() - 1) {
@@ -49,6 +52,9 @@ public class Trie {
         List<String> result = new LinkedList<>();
         for (int i = 0; i < s.length(); i++) {
             int j = s.charAt(i) - 97;
+            if (s.charAt(i) == 32) {
+                j = 26;
+            }
             if (j < 27 && j >= 0) {
                 n = n.next[j];
             }
@@ -64,7 +70,7 @@ public class Trie {
         if (n.isKey) {
             results.add(prefix.toString());
         }
-        for (int c = 0; c < 26; c++) {
+        for (int c = 0; c < 27; c++) {
             if (n.next[c] != null) {
                 String p = prefix.toString();
                 TrieNode w = n.next[c];
