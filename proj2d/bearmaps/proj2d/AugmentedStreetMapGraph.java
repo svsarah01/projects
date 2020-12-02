@@ -43,7 +43,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                     cleanNametoNodeMap.put(cleanName, new LinkedList<>());
                 }
                 cleanNametoNodeMap.get(cleanName).add(n);
-                System.out.println("Clean Name: " + cleanName + ", Actual Name: " + n.name());
             }
             //old
             long id = n.id();
@@ -84,10 +83,11 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         List<String> result = new LinkedList<>();
         System.out.println(result);
         for (String s : cleanedResult) {
-            List<Node> nodes = cleanNametoNodeMap.get(s);
-            if (!nodes.isEmpty()) {
-                for (Node n : nodes) {
+            if (cleanNametoNodeMap.containsKey(s)) {
+                System.out.println("Had Node list for String: " + s);
+                for (Node n : cleanNametoNodeMap.get(s)) {
                     result.add(n.name());
+                    System.out.println(n.name());
                 }
             }
         }
