@@ -39,13 +39,11 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
             if (n.name() != null) {
                 String cleanName = cleanString(n.name());
                 cleanedNameTrie.add(cleanName);
-                if (cleanNametoNodeMap.get(cleanName) == null) {
-                    List<Node> correspondingNodes = new LinkedList<>();
-                    correspondingNodes.add(n);
-                    cleanNametoNodeMap.put(cleanName, correspondingNodes);
-                } else {
-                    cleanNametoNodeMap.get(cleanName).add(n);
+                if (!cleanNametoNodeMap.containsKey(cleanName)) {
+                    cleanNametoNodeMap.put(cleanName, new LinkedList<>());
                 }
+                cleanNametoNodeMap.get(cleanName).add(n);
+                System.out.println("Clean Name: " + cleanName + ", Actual Name: " + n.name());
             }
             //old
             long id = n.id();
@@ -84,9 +82,10 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         String cleanedPrefix = cleanString(prefix);
         List<String> cleanedResult = cleanedNameTrie.keysWithPrefix(cleanedPrefix);
         List<String> result = new LinkedList<>();
+        System.out.println(result);
         for (String s : cleanedResult) {
             List<Node> nodes = cleanNametoNodeMap.get(s);
-            if (nodes != null) {
+            if (!nodes.isEmpty()) {
                 for (Node n : nodes) {
                     result.add(n.name());
                 }
@@ -160,5 +159,13 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         t.add(cleanString("Panoramic Hill"));
 
         List<String> l = t.keysWithPrefix("pa");
+
+        t.add(cleanString("JotMahal Palace of Indian Cuisine"));
+        t.add(cleanString("John Le Conte and Joseph Le Conte Memorial"));
+        t.add(cleanString("John's Ice Cream"));
+        t.add(cleanString("Johnny B's Cafe"));
+        t.add(cleanString("Johnny's"));
+
+        List<String> l2 = t.keysWithPrefix("jo");
     }
 }

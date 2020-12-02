@@ -69,10 +69,8 @@ public class Trie {
                 String p = prefix.toString();
                 TrieNode w = n.next[c];
                 prefix.append(w.ch);
-                System.out.println(prefix.toString());
                 collect(w, prefix, results);
                 prefix = new StringBuilder(p);
-                System.out.println(prefix.toString());
             }
         }
     }
