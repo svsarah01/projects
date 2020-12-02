@@ -83,8 +83,10 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         List<String> result = new LinkedList<>();
         System.out.println(cleanedResult);
         for (String s : cleanedResult) {
-            for (Node n : cleanNametoNodeMap.get(s)) {
-                result.add(n.name());
+            if (cleanNametoNodeMap.containsKey(s)) {
+                for (Node n : cleanNametoNodeMap.get(s)) {
+                    result.add(n.name());
+                }
             }
         }
         return result;
