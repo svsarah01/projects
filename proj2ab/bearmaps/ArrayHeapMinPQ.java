@@ -115,11 +115,13 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (node.smaller(leftChild(node)) && node.smaller(rightChild(node))) {
             return;
         }
-        if (leftChild(node) != null && leftChild(node).smaller(rightChild(node)) && leftChild(node).smaller(node)) {
+        if (leftChild(node) != null
+                && leftChild(node).smaller(rightChild(node)) && leftChild(node).smaller(node)) {
             swap(node, leftChild(node));
             sink(node);
         }
-        if (rightChild(node) != null && rightChild(node).smaller(leftChild(node)) && rightChild(node).smaller(node)) {
+        if (rightChild(node) != null
+                && rightChild(node).smaller(leftChild(node)) && rightChild(node).smaller(node)) {
             swap(node, rightChild(node));
             sink(node);
         }
