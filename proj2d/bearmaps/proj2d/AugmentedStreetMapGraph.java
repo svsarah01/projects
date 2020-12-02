@@ -81,7 +81,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         String cleanedPrefix = cleanString(prefix);
         List<String> cleanedResult = cleanedNameTrie.keysWithPrefix(cleanedPrefix);
         List<String> result = new LinkedList<>();
-        System.out.println(cleanedResult);
         for (String s : cleanedResult) {
             if (cleanNametoNodeMap.containsKey(s)) {
                 for (Node n : cleanNametoNodeMap.get(s)) {
@@ -108,14 +107,14 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     public List<Map<String, Object>> getLocations(String locationName) {
         String cleanedLocationName = cleanString(locationName);
         List<Map<String, Object>> result = new LinkedList<>();
-//        for (Node n : cleanNametoNodeMap.get(cleanedLocationName)) {
-//            Map<String, Object> locationInfo = new HashMap<>();
-//            locationInfo.put("lat", n.lat());
-//            locationInfo.put("lon", n.lon());
-//            locationInfo.put("name", n.name());
-//            locationInfo.put("id", n.id());
-//            result.add(locationInfo);
-//        }
+        for (Node n : cleanNametoNodeMap.get(cleanedLocationName)) {
+            Map<String, Object> locationInfo = new HashMap<>();
+            locationInfo.put("lat", n.lat());
+            locationInfo.put("lon", n.lon());
+            locationInfo.put("name", n.name());
+            locationInfo.put("id", n.id());
+            result.add(locationInfo);
+        }
         return result;
     }
 
